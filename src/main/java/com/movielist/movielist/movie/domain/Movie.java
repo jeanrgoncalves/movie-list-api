@@ -1,9 +1,6 @@
 package com.movielist.movielist.movie.domain;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Builder
 @Table(name = "movies")
 public class Movie {
 
@@ -22,6 +20,7 @@ public class Movie {
     @GeneratedValue
     private UUID id;
 
+    @Setter
     private String name;
 
     private boolean alreadySeen = false;
