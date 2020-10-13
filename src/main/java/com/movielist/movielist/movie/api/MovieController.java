@@ -1,30 +1,43 @@
 package com.movielist.movielist.movie.api;
 
+import com.movielist.movielist.movie.api.dto.MovieDTO;
+import com.movielist.movielist.movie.api.dto.MovieDTOAssembler;
 import com.movielist.movielist.movie.domain.Movie;
-import com.movielist.movielist.movie.domain.MovieRepository;
+import com.movielist.movielist.movie.domain.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/movies")
 public class MovieController {
 
     @Autowired
-    private MovieRepository repository;
+    private MovieDTOAssembler assembler;
+
+    @Autowired
+    private MovieService service;
 
     @GetMapping
-    public ResponseEntity<List<Movie>> findAll() {
-        var movies = repository.findAll();
-        return new ResponseEntity<>(movies, HttpStatus.OK);
+    public ResponseEntity<List<MovieDTO>> findAll() {
+        var movies = service.findAll();
+        var dtos = assembler.assembleManyDTOs(movies);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Movie> insert(@RequestBody Movie movie) {
-        return new ResponseEntity<>(movie, HttpStatus.CREATED);
+    public ResponseEntity<Movie> save(@RequestBody MovieDTO movieDTO) {
+        Movie movie = service.save(assembler.fromDTO(movieDTO));
+        return new ResponseEntity<>(movie, movieDTO.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteById(@PathVariable UUID id) {
+        service.deleteById(id);
     }
 
 }

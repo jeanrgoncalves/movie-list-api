@@ -1,5 +1,6 @@
 package com.movielist.movielist.movie.domain;
 
+import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -11,18 +12,17 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor()
 @Builder
+@Getter
+@Setter
 @Table(name = "movies")
-public class Movie {
+public class Movie implements BaseEntity {
 
     @Id
     @GeneratedValue
     private UUID id;
-
-    @Setter
     private String name;
-
     private boolean alreadySeen = false;
 
 }

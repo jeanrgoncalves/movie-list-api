@@ -1,2 +1,4 @@
-package com.movielist.movielist.genericentitydto;public interface DataTransferObject {
+package com.movielist.movielist.genericentitydto;
+
+public class DataTransferObject {
 }

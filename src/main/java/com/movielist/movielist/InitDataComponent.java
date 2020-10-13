@@ -1,4 +1,4 @@
-package com.movielist.movielist.movie;
+package com.movielist.movielist;
 
 import com.movielist.movielist.movie.domain.Movie;
 import com.movielist.movielist.movie.domain.MovieRepository;
@@ -16,9 +16,9 @@ public class InitDataComponent {
     MovieRepository repository;
 
     @EventListener(ApplicationReadyEvent.class)
-    public void initData() throws Exception {
+    public void initData() {
         Movie inception = Movie.builder()
-                .name("Inception")
+                .name("A Origem")
                 .alreadySeen(true)
                 .build();
 
@@ -28,7 +28,7 @@ public class InitDataComponent {
                 .build();
 
         Movie theIrishman = Movie.builder()
-                .name("The Irishman")
+                .name("O Irlandês")
                 .alreadySeen(false)
                 .build();
 
