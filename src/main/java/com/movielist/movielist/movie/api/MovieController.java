@@ -29,6 +29,13 @@ public class MovieController {
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
+    @GetMapping (path = "/namePart/{namePart}")
+    public ResponseEntity<List<MovieDTO>> findByNameContaining(@PathVariable String namePart) {
+        var movies = service.findByNamePart(namePart);
+        var dtos = assembler.assembleManyDTOs(movies);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Movie> save(@RequestBody MovieDTO movieDTO) {
         Movie movie = service.save(assembler.fromDTO(movieDTO));

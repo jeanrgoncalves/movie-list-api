@@ -15,7 +15,7 @@ public class InitDataComponent {
     @Autowired
     MovieRepository repository;
 
-    @EventListener(ApplicationReadyEvent.class)
+    //@EventListener(ApplicationReadyEvent.class) para iniciar a aplicação com alguns dados
     public void initData() {
         Movie inception = Movie.builder()
                 .name("A Origem")

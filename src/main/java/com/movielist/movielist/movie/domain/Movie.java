@@ -3,10 +3,7 @@ package com.movielist.movielist.movie.domain;
 import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -22,7 +19,10 @@ public class Movie implements BaseEntity {
     @Id
     @GeneratedValue
     private UUID id;
+
     private String name;
+
+    @Column(name = "already_seen")
     private boolean alreadySeen = false;
 
 }
