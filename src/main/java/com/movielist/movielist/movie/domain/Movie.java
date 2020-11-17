@@ -4,6 +4,8 @@ import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
@@ -20,6 +22,7 @@ public class Movie implements BaseEntity {
     @GeneratedValue
     private UUID id;
 
+    @NotBlank
     private String name;
 
     @Column(name = "already_seen")

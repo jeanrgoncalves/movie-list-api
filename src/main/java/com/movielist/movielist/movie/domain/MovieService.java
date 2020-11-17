@@ -1,10 +1,13 @@
 package com.movielist.movielist.movie.domain;
 
+import com.movielist.movielist.apierror.ApiError;
+import com.movielist.movielist.apierror.CustomException;
 import com.movielist.movielist.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -36,7 +39,13 @@ public class MovieService {
     }
 
     public void deleteById(UUID id) {
-        repository.deleteById(id);
+       try {
+           repository.deleteById(id);
+       } catch (Exception e) {
+           throw CustomException.builder()
+                   .message("Filme com ID " + id.toString() + " não encontrado.")
+                   .build();
+       }
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,9 +32,9 @@ public class MovieController {
 
     @GetMapping (path = "/namePart/{namePart}")
     public ResponseEntity<List<MovieDTO>> findByNameContaining(@PathVariable String namePart) {
-        var movies = service.findByNamePart(namePart);
-        var dtos = assembler.assembleManyDTOs(movies);
-        return new ResponseEntity<>(dtos, HttpStatus.OK);
+            var movies = service.findByNamePart(namePart);
+            var dtos = assembler.assembleManyDTOs(movies);
+            return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
     @PostMapping
