@@ -3,12 +3,14 @@ package com.movielist.movielist.movie.domain;
 import com.movielist.movielist.apierror.ApiError;
 import com.movielist.movielist.apierror.CustomException;
 import com.movielist.movielist.util.StringUtil;
+import com.movielist.movielist.util.Translator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -17,6 +19,9 @@ public class MovieService {
 
     @Autowired
     private MovieRepository repository;
+
+    @Autowired
+    private Translator translator;
 
 
     public List<Movie> findAll() {
@@ -43,7 +48,7 @@ public class MovieService {
            repository.deleteById(id);
        } catch (Exception e) {
            throw CustomException.builder()
-                   .message("Filme com ID " + id.toString() + " não encontrado.")
+                   .message(translator.getText("movieNotFoundId") + " " + id.toString())
                    .build();
        }
     }
