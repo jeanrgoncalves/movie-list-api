@@ -2,16 +2,15 @@ package com.movielist.movielist.movie.domain;
 
 import com.movielist.movielist.apierror.ApiError;
 import com.movielist.movielist.apierror.CustomException;
+import com.movielist.movielist.movie.validator.MovieSaveValidator;
 import com.movielist.movielist.util.StringUtil;
 import com.movielist.movielist.util.Translator;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,6 +22,12 @@ public class MovieService {
     @Autowired
     private Translator translator;
 
+    private List<MovieSaveValidator> saveValidators;
+
+    @Autowired
+    public MovieService(ListableBeanFactory beanFactory) {
+        saveValidators = new ArrayList<>(beanFactory.getBeansOfType(MovieSaveValidator.class).values());
+    }
 
     public List<Movie> findAll() {
         return repository.findAll();
@@ -40,6 +45,16 @@ public class MovieService {
     }
 
     public Movie save(Movie movie) {
+        List<String> validationMsgs = new ArrayList<>();
+
+        saveValidators.forEach(validator -> {
+            validationMsgs.addAll(validator.validate(movie));
+        });
+
+        if (!validationMsgs.isEmpty()) {
+            throw new CustomException(translator.getText("saveMovieFailValidation"), validationMsgs);
+        }
+
         return repository.save(movie);
     }
 
@@ -48,7 +63,7 @@ public class MovieService {
            repository.deleteById(id);
        } catch (Exception e) {
            throw CustomException.builder()
-                   .message(translator.getText("movieNotFoundId") + " " + id.toString())
+                   .message(translator.getText("movieNotFoundId", id.toString()))
                    .build();
        }
     }

@@ -12,6 +12,7 @@ public class MovieDTOAssembler extends AbstractAssembler<Movie, MovieDTO> {
         return MovieDTO.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .director(entity.getDirector())
                 .alreadySeen(entity.isAlreadySeen())
                 .build();
     }
@@ -20,6 +21,7 @@ public class MovieDTOAssembler extends AbstractAssembler<Movie, MovieDTO> {
     public Movie fromDTO(MovieDTO dto) {
         return Movie.builder()
                 .id(dto.getId())
+                .director(dto.getDirector())
                 .name(dto.getName())
                 .alreadySeen(dto.isAlreadySeen())
                 .build();

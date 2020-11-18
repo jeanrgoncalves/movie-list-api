@@ -1,5 +1,6 @@
 package com.movielist.movielist.movie.domain;
 
+import com.movielist.movielist.director.domain.Director;
 import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
@@ -24,6 +25,10 @@ public class Movie implements BaseEntity {
 
     @NotBlank
     private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "id_director")
+    private Director director = new Director();
 
     @Column(name = "already_seen")
     private boolean alreadySeen = false;
