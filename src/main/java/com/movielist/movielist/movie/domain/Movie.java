@@ -28,7 +28,7 @@ public class Movie implements BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "id_director")
-    private Director director = new Director();
+    private Director director;
 
     @Column(name = "already_seen")
     private boolean alreadySeen = false;

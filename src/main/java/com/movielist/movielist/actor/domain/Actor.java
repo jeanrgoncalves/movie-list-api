@@ -1,12 +1,13 @@
-package com.movielist.movielist.director.domain;
+package com.movielist.movielist.actor.domain;
 
-import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
@@ -16,12 +17,16 @@ import java.util.UUID;
 @Builder
 @Getter
 @Setter
-@Table(name = "directors")
-public class Director implements BaseEntity {
+@Table(name = "actors")
+public class Actor {
 
     @Id
     @GeneratedValue
     private UUID id;
 
+    @NotBlank
     private String name;
+
+    LocalDate birthDate;
+
 }

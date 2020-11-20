@@ -13,21 +13,36 @@ import java.util.List;
 public class MovieDirectorAlreadyExistsValidator implements MovieSaveValidator {
 
     @Autowired
-    MovieRepository repository;
+    private MovieRepository repository;
 
     @Autowired
-    Translator translator;
+    private Translator translator;
+
+    private List<String> validationMsgs;
 
     @Override
     public List<String> validate(Movie movie) {
-        List<String> validationMsgs = new ArrayList<>();
+        validationMsgs = new ArrayList<>();
 
-        List<Movie> foundMovie = repository.findByNameAndDirectorId(movie.getName(), movie.getDirector().getId());
-       if (!foundMovie.isEmpty()) {
-            String msg = translator.getText("movieDirectorAlreadyExists", foundMovie.get(0).getName(), foundMovie.get(0).getDirector().getName());
-            validationMsgs.add(msg);
-       }
+        if ( movie.getDirector() != null) {
+            List<Movie> foundMovie = repository.findByNameAndDirectorId(movie.getName(), movie.getDirector().getId());
+            if (!foundMovie.isEmpty()) {
+                if (movie.getId() == null) {
+                    addValidationMsg(foundMovie.get(0));
+                } else {
+                    if (movie.getId().compareTo(foundMovie.get(0).getId()) != 0) {
+                        addValidationMsg(foundMovie.get(0));
+                    }
+                }
 
-       return validationMsgs;
+            }
+        }
+
+        return validationMsgs;
+    }
+
+    private void addValidationMsg(Movie foundMovie) {
+        String msg = translator.getText("movieDirectorAlreadyExists", foundMovie.getName(), foundMovie.getDirector().getName());
+        validationMsgs.add(msg);
     }
 }
