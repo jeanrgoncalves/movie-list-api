@@ -1,11 +1,9 @@
 package com.movielist.movielist.actor.domain;
 
+import com.movielist.movielist.genericentitydto.BaseEntity;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.UUID;
@@ -18,7 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "actors")
-public class Actor {
+public class Actor implements BaseEntity {
 
     @Id
     @GeneratedValue
@@ -27,6 +25,7 @@ public class Actor {
     @NotBlank
     private String name;
 
-    LocalDate birthDate;
+    @Column(name = "birth_date")
+    private LocalDate birthDate;
 
 }
