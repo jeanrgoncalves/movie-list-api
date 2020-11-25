@@ -1,6 +1,5 @@
 package com.movielist.movielist.movie.domain;
 
-import com.movielist.movielist.apierror.ApiError;
 import com.movielist.movielist.apierror.CustomException;
 import com.movielist.movielist.movie.validator.MovieSaveValidator;
 import com.movielist.movielist.util.StringUtil;
@@ -9,7 +8,6 @@ import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.Normalizer;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -45,6 +43,8 @@ public class MovieService {
     }
 
     public Movie save(Movie movie) {
+        setIDs(movie);
+
         List<String> validationMsgs = new ArrayList<>();
 
         saveValidators.forEach(validator -> {
@@ -56,6 +56,20 @@ public class MovieService {
         }
 
         return repository.save(movie);
+    }
+
+    private void setIDs(Movie movie) {
+        if (movie.getId() == null) {
+            movie.setId(UUID.randomUUID());
+        }
+
+        UUID movieId = movie.getId();
+
+        if (movie.getCast() != null) {
+            movie.getCast().forEach(movieActor -> {
+                movieActor.setMovie(Movie.builder().id(movieId).build());
+            });
+        }
     }
 
     public void deleteById(UUID id) {

@@ -1,6 +1,6 @@
 package com.movielist.movielist.movie.domain;
 
-import com.movielist.movielist.actor.domain.Actor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.movielist.movielist.director.domain.Director;
 import com.movielist.movielist.genericentitydto.BaseEntity;
 import com.movielist.movielist.movie.movieactor.domain.MovieActor;
@@ -15,14 +15,13 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-@NoArgsConstructor()
+@NoArgsConstructor
 @Builder
 @Getter
 @Table(name = "movies")
 public class Movie implements BaseEntity {
 
     @Id
-    @GeneratedValue
     @Setter
     private UUID id;
 
@@ -40,7 +39,7 @@ public class Movie implements BaseEntity {
     private boolean alreadySeen = false;
 
     @Builder.Default
-    @OneToMany(mappedBy = "actor", fetch = FetchType.LAZY, cascade = CascadeType.MERGE, orphanRemoval = true)
+    @OneToMany(mappedBy = "movie", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MovieActor> cast = new ArrayList<>();
 
     public void addActor(MovieActor movieActor) {

@@ -16,7 +16,7 @@ import java.util.UUID;
 public class MovieActorDTO extends DataTransferObject {
 
     private UUID id;
-    private MovieDTO movieDTO;
+    private UUID movieId;
     private ActorDTO actorDTO;
 
 }

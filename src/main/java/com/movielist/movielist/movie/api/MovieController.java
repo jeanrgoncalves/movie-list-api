@@ -38,9 +38,10 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Movie> save(@RequestBody MovieDTO movieDTO) {
+    public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movieDTO) {
         Movie movie = service.save(assembler.fromDTO(movieDTO));
-        return new ResponseEntity<>(movie, movieDTO.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
+        MovieDTO dto = assembler.fromEntity(movie);
+        return new ResponseEntity<>(dto, movieDTO.getId() == null ? HttpStatus.CREATED : HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/{id}")
