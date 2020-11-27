@@ -1,6 +1,5 @@
 package com.movielist.movielist.movie.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.movielist.movielist.director.domain.Director;
 import com.movielist.movielist.genericentitydto.BaseEntity;
 import com.movielist.movielist.movie.movieactor.domain.MovieActor;

@@ -4,17 +4,19 @@ import com.movielist.movielist.movie.api.dto.MovieDTO;
 import com.movielist.movielist.movie.api.dto.MovieDTOAssembler;
 import com.movielist.movielist.movie.domain.Movie;
 import com.movielist.movielist.movie.domain.MovieService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @RestController
 @RequestMapping(path = "/api/v1/movies")
+@Api(value = "Movie")
 public class MovieController {
 
     @Autowired
@@ -24,6 +26,7 @@ public class MovieController {
     private MovieService service;
 
     @GetMapping
+    @ApiOperation(value = "Find all Movies")
     public ResponseEntity<List<MovieDTO>> findAll() {
         var movies = service.findAll();
         var dtos = assembler.assembleManyDTOs(movies);
@@ -31,6 +34,7 @@ public class MovieController {
     }
 
     @GetMapping (path = "/namePart/{namePart}")
+    @ApiOperation(value = "Find Movies by part of name")
     public ResponseEntity<List<MovieDTO>> findByNameContaining(@PathVariable String namePart) {
             var movies = service.findByNamePart(namePart);
             var dtos = assembler.assembleManyDTOs(movies);
@@ -38,6 +42,7 @@ public class MovieController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Save a Movie")
     public ResponseEntity<MovieDTO> save(@RequestBody MovieDTO movieDTO) {
         Movie movie = service.save(assembler.fromDTO(movieDTO));
         MovieDTO dto = assembler.fromEntity(movie);
@@ -45,6 +50,7 @@ public class MovieController {
     }
 
     @DeleteMapping(path = "/{id}")
+    @ApiOperation(value = "Delete a Movie by id")
     public void deleteById(@PathVariable UUID id) {
         service.deleteById(id);
     }
