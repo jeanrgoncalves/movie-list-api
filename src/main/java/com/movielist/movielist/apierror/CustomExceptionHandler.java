@@ -20,7 +20,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         }
 
         ApiError apiError = ApiError.builder()
-                .status(status)
+                .httpStatus(status.toString())
                 .message(ex.getMessage())
                 .build();
 
@@ -30,7 +30,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CustomException.class)
     public final ResponseEntity<Object> handleCustomExceptions(CustomException customException) {
         ApiError apiError = new ApiError(customException);
-        return new ResponseEntity(apiError, new HttpHeaders(), apiError.getStatus());
+        return new ResponseEntity(apiError, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 }

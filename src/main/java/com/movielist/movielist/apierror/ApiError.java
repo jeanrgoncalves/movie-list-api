@@ -12,18 +12,18 @@ import java.util.List;
 @Setter
 public class ApiError {
 
-    private HttpStatus status;
+    private String httpStatus;
     private String message;
     private List<String> errors;
 
     public ApiError(CustomException e) {
-        status = HttpStatus.INTERNAL_SERVER_ERROR;
+        httpStatus = HttpStatus.INTERNAL_SERVER_ERROR.toString();
         message = e.getMessage();
         errors = e.getErrors();
     }
 
-    public ApiError(HttpStatus status, String message, List<String> errors) {
-        this.status = status;
+    public ApiError(String httpStatus, String message, List<String> errors) {
+        this.httpStatus = httpStatus;
         this.message = message;
         this.errors = errors;
     }

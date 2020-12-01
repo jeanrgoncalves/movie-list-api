@@ -76,9 +76,7 @@ public class MovieService {
        try {
            repository.deleteById(id);
        } catch (Exception e) {
-           throw CustomException.builder()
-                   .message(translator.getText("movieNotFoundId", id.toString()))
-                   .build();
+           throw new CustomException(translator.getText("movieNotFoundId", id.toString()), null);
        }
     }
 
