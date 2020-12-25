@@ -1,6 +1,7 @@
 package com.movielist.movielist.movie.domain;
 
 import com.movielist.movielist.apierror.CustomException;
+import com.movielist.movielist.genericentitydto.AbstractAssembler;
 import com.movielist.movielist.movie.validator.MovieSaveValidator;
 import com.movielist.movielist.util.StringUtil;
 import com.movielist.movielist.util.Translator;

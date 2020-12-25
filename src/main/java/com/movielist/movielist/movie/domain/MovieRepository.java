@@ -17,3 +17,4 @@ public interface MovieRepository extends JpaRepository<Movie, UUID> {
 
     List<Movie> findByNameAndDirectorId(String name, UUID directorId); //retorno em lista para evitar exception caso tenha sido inserido duplicado direto no banco
 }
+

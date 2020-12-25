@@ -1,6 +1,8 @@
 package com.movielist.movielist.actor.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.movielist.movielist.genericentitydto.DataTransferObject;
+import com.movielist.movielist.util.ConstantsFormats;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ public class ActorDTO extends DataTransferObject {
 
     private UUID id;
     private String name;
+
+    @JsonFormat(pattern = ConstantsFormats.DATE_TIME_API_FORMAT)
     private LocalDateTime birthDate;
 
 }

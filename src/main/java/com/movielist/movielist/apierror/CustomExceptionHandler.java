@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -28,8 +30,17 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(CustomException.class)
-    public final ResponseEntity<Object> handleCustomExceptions(CustomException customException) {
+    public final ResponseEntity<Object> handleCustomException(CustomException customException) {
         ApiError apiError = new ApiError(customException);
+        return new ResponseEntity(apiError, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public final ResponseEntity<Object> handleEntityNotFoundException(EntityNotFoundException exception) {
+        ApiError apiError = ApiError.builder()
+                .message(exception.getMessage())
+                .httpStatus(HttpStatus.INTERNAL_SERVER_ERROR.toString())
+                .build();
         return new ResponseEntity(apiError, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
