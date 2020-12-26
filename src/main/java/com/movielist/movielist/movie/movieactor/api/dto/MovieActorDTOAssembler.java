@@ -3,7 +3,6 @@ package com.movielist.movielist.movie.movieactor.api.dto;
 import com.movielist.movielist.actor.api.dto.ActorDTOAssembler;
 import com.movielist.movielist.actor.domain.Actor;
 import com.movielist.movielist.genericentitydto.AbstractAssembler;
-import com.movielist.movielist.movie.api.dto.MovieDTOAssembler;
 import com.movielist.movielist.movie.domain.Movie;
 import com.movielist.movielist.movie.movieactor.domain.MovieActor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,6 @@ import java.util.UUID;
 
 @Component
 public class MovieActorDTOAssembler extends AbstractAssembler<MovieActor, MovieActorDTO> {
-
-    @Autowired
-    private MovieDTOAssembler movieDTOAssembler;
 
     @Autowired
     private ActorDTOAssembler actorDTOAssembler;
@@ -35,10 +31,14 @@ public class MovieActorDTOAssembler extends AbstractAssembler<MovieActor, MovieA
                 ? dto.getActorDTO().getId()
                 : null;
 
+        String actorName = dto.getActorDTO() != null
+                ? dto.getActorDTO().getName()
+                : null;
+
         return MovieActor.builder()
                 .id(dto.getId())
                 .movie(Movie.builder().id(dto.getMovieId()).build())
-                .actor(Actor.builder().id(actorID).build())
+                .actor(Actor.builder().id(actorID).name(actorName).build())
                 .build();
     }
 }

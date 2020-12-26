@@ -34,7 +34,6 @@ public class MovieDirectorAlreadyExistsValidator implements MovieSaveValidator {
                         addValidationMsg(foundMovie.get(0));
                     }
                 }
-
             }
         }
 
