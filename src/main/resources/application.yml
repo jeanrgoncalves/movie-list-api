@@ -1,0 +1,23 @@
+#datasource
+spring:
+    datasource:
+        platform: postgresql
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/movielist
+        username: postgres
+        password: postgres
+
+#jpa
+    jpa:
+        database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+        hibernate.ddl-auto: update
+        show-sql: true
+
+#port
+server:
+    port: 8585
+
+#h2
+#spring.h2.console.enabled=true
+#spring.h2.console.path=/h2-console
+
